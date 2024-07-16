@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { ICustomer, IUser } from "../interfaces/IUser";
 const { Schema, model, models } = mongoose;
 
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema(
   {
     phone: {
       type: String,
@@ -18,8 +18,8 @@ const userSchema = new Schema<IUser>(
       trim: true,
     },
     lastName: {
-    type: String,
-    uppercase: true,
+      type: String,
+      uppercase: true,
       trim: true,
     },
     maternalSurname: {
@@ -70,6 +70,19 @@ const userSchema = new Schema<IUser>(
       type: Boolean,
       required: true,
     },
+    balance: {
+      type: new Schema({
+        pendingBalance: {
+          type: Boolean,
+          default: false,
+        },
+        dueBalance: {
+          type: Number,
+          default: 0,
+        },
+      }),
+      required: false,
+    },
   },
   {
     timestamps: true,
@@ -78,7 +91,7 @@ const userSchema = new Schema<IUser>(
   },
 );
 
-const User = models.User || model("User", userSchema);
+export const User = models.User<IUser> || model<IUser>("User", userSchema);
 
 const customerSchema = new Schema<ICustomer>({
   balance: {

@@ -14,6 +14,10 @@ export interface IUser {
   maternalSurname?: string;
   address?: IAddress;
   active: boolean;
+  balance: {
+    pendingBalance: boolean;
+    dueBalance: number;
+  };
 }
 
 export interface ICustomer extends IUser {
